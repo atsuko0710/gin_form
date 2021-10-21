@@ -13,7 +13,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 
 	// 404 处理
 	g.NoRoute(func(c *gin.Context) {
-		c.String(http.StatusNotFound, "该路由不存在")
+		c.JSON(http.StatusNotFound, gin.H{"message": "该路由不存在"})
 	})
 
 	// 注册路由
@@ -22,5 +22,5 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 			"message": "Hello world!",
 		})
 	})
-	return g;
+	return g
 }
