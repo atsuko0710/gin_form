@@ -24,6 +24,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		})
 	})
 	g.POST("/register", controllers.Register)
+	g.POST("/login", controllers.Login)
 	
 	return g
 }
