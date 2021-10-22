@@ -1,24 +1,27 @@
 package service
 
 import (
-	"errors"
 	"gin_forum/models"
 	"gin_forum/params"
 	"gin_forum/pkg/auth"
 	"gin_forum/pkg/snowflake"
+	"gin_forum/pkg/response"
 	"gin_forum/repository"
+
+	"go.uber.org/zap"
 )
 
 // Register 注册用户
-func Register(request params.CreateRequest) (err error) {
+func Register(request params.CreateRequest) (code response.ResCode) {
 	if (!repository.CheckUserExist(request.Username)) {
-		return errors.New("用户已存在")
+		return response.UserExist
 	}
 
 	userID := snowflake.GetID()
 	pass, err := auth.Encrypt(request.Password)
 	if err != nil {
-		return errors.New("密码加密失败")
+		zap.L().Error("auth.Encrypt() failed", zap.Error(err))
+		return response.InternalServerError
 	}
 	
 	user := models.User{
@@ -28,21 +31,22 @@ func Register(request params.CreateRequest) (err error) {
 	}
 
 	if err :=repository.CreateUser(user); err != nil {
-		return errors.New("创建用户失败")
+		return response.CreateUserField
 	}
 	
-	return nil
+	return response.OK
 }
 
 // Login 登录逻辑
-func Login(request params.LoginRequest) (err error) {
+func Login(request params.LoginRequest) (resCode response.ResCode) {
 	user, err := models.FindByUsername(request.Username)
 	if err != nil {
-		return errors.New("该用户不存在")
+		return response.UserNotExist
 	}
 
 	if err = auth.Compare(user.Password, request.Password); err != nil {
-		return errors.New("密码错误")
+		zap.L().Error("auth.Compare() failed", zap.Error(err))
+		return response.InvalidPassword
 	}
-	return nil
+	return response.OK
 }

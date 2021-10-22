@@ -4,11 +4,11 @@ import (
 	"net/http"
 
 	"gin_forum/params"
+	"gin_forum/pkg/response"
 	"gin_forum/service"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"go.uber.org/zap"
 )
 
 // Register 处理用户注册入口
@@ -19,9 +19,7 @@ func Register(c *gin.Context) {
 		// 判断错误是不是 validator.ValidationErrors 类型
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"msg": "参数有误",
-			})
+			response.SendResponse(c, response.InvalidParam)
 			return
 		}
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -29,17 +27,8 @@ func Register(c *gin.Context) {
 		})
 		return
 	}
-	
-	if err := service.Register(params); err != nil {
-		zap.L().Error("mysql.Register() failed", zap.Error(err))
-		c.JSON(http.StatusOK, gin.H{
-			"msg": err.Error(),
-		})
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"msg": "success",
-	})
+	resCode := service.Register(params)
+	response.SendResponse(c, resCode)
 }
 
 // Login 登录入口
@@ -50,9 +39,7 @@ func Login(c *gin.Context)  {
 		// 判断错误是不是 validator.ValidationErrors 类型
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"msg": "参数有误",
-			})
+			response.SendResponse(c, response.InvalidParam)
 			return
 		}
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -61,15 +48,6 @@ func Login(c *gin.Context)  {
 		return
 	}
 
-	if err := service.Login(params); err != nil {
-		zap.L().Error("mysql.Login(&u) failed", zap.Error(err))
-		c.JSON(http.StatusOK, gin.H{
-			"msg": err.Error(),
-		})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"msg": "success",
-	})
+	resCode := service.Login(params)
+	response.SendResponse(c, resCode)
 }
