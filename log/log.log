@@ -1,6 +1,0 @@
-{"level":"\u001b[34mINFO\u001b[0m","time":"2021-10-22T14:26:37.898+0800","caller":"logger/logger.go:42","msg":"init logger success"}
-{"level":"\u001b[34mINFO\u001b[0m","time":"2021-10-22T14:26:47.019+0800","caller":"logger/logger.go:77","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"::1","user-agent":"PostmanRuntime/7.28.4","errors":"","cost":0.185956672}
-{"level":"\u001b[31mERROR\u001b[0m","time":"2021-10-22T14:26:52.071+0800","caller":"controllers/user.go:65","msg":"mysql.Login(&u) failed","error":"密码错误"}
-{"level":"\u001b[34mINFO\u001b[0m","time":"2021-10-22T14:26:52.071+0800","caller":"logger/logger.go:77","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"::1","user-agent":"PostmanRuntime/7.28.4","errors":"","cost":0.245194347}
-{"level":"\u001b[31mERROR\u001b[0m","time":"2021-10-22T14:26:57.461+0800","caller":"controllers/user.go:65","msg":"mysql.Login(&u) failed","error":"该用户不存在"}
-{"level":"\u001b[34mINFO\u001b[0m","time":"2021-10-22T14:26:57.464+0800","caller":"logger/logger.go:77","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"::1","user-agent":"PostmanRuntime/7.28.4","errors":"","cost":0.045717511}
