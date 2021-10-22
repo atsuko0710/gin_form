@@ -5,9 +5,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"gin_forum/controllers"
+	"gin_forum/config/logger"
 )
 
 func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
+
+	g.Use(logger.GinLogger(), logger.GinRecovery(true))
 
 	// 添加中间件
 	g.Use(mw...)

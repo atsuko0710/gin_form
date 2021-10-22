@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"go.uber.org/zap"
 )
 
 // Register 处理用户注册入口
@@ -30,6 +31,7 @@ func Register(c *gin.Context) {
 	}
 	
 	if err := service.Register(params); err != nil {
+		zap.L().Error("mysql.Register() failed", zap.Error(err))
 		c.JSON(http.StatusOK, gin.H{
 			"msg": err.Error(),
 		})
@@ -60,6 +62,7 @@ func Login(c *gin.Context)  {
 	}
 
 	if err := service.Login(params); err != nil {
+		zap.L().Error("mysql.Login(&u) failed", zap.Error(err))
 		c.JSON(http.StatusOK, gin.H{
 			"msg": err.Error(),
 		})
