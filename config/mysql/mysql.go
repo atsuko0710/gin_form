@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	db *gorm.DB
+	Db *gorm.DB
 )
 
 // Init 初始化mysql数据库
@@ -23,19 +23,19 @@ func Init() (err error) {
 		//"Asia/Shanghai"),
 		"Local")
 
-	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(fmt.Errorf("database connection failed, err:%v", err))
 	}
 
-	setupDB(db)
+	setupDB(Db)
 
 	return
 }
 
 // Close 关闭数据库连接
 func Close() {
-	sqlDB, err := db.DB()
+	sqlDB, err := Db.DB()
 	if err != nil {
 		panic(fmt.Errorf("get sqlDB failed, err:%v", err))
 	}

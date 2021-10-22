@@ -1,5 +1,8 @@
 package models
 
+import "gin_forum/config/mysql"
+
+
 type User struct {
 	BaseModel
 	UserId   int64  `json:"user_id" gorm:"column:user_id;not null"`
@@ -13,6 +16,14 @@ func (u *User) TableName() string {
 	return TNUser()
 }
 
-// func FindByParams(u *User) (*User, error) {
-	
-// }
+// FindByUsername 根据用户名查找用户信息
+func FindByUsername(username string) (*User, error) {
+	u := &User{}
+	d := mysql.Db.Where("username=?", username).First(&u)
+	return u, d.Error
+}
+
+// CreateUser 创建用户
+func CreateUser(u User) error {
+	return mysql.Db.Create(&u).Error
+}

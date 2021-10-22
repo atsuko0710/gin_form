@@ -1,20 +1,23 @@
 package repository
 
-// import "gin_forum/models"
+import (
+	"gin_forum/models"
 
-func CreateUser() {
+	"gorm.io/gorm"
+)
 
+func CreateUser(u models.User) error {
+	return  models.CreateUser(u)
 }
 
-// func FindUserByUsername(username string) (u *models.User) {
-	
-// }
-
+// CheckUserExist 检查用户是否存在
 func CheckUserExist(username string) bool {
-	// if (FindUserByUsername(username)) {
-	// 	return true
-	// } else {
-	// 	return false
-	// }
+	_, err := models.FindByUsername(username);
+	if err == gorm.ErrRecordNotFound {
+		return true
+	}
+	if err != nil {
+		return false
+	}
 	return false
 }
