@@ -19,7 +19,7 @@ func Register(c *gin.Context) {
 		// 判断错误是不是 validator.ValidationErrors 类型
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			response.SendResponse(c, response.InvalidParam)
+			response.SendResponse(c, response.InvalidParam, gin.H{})
 			return
 		}
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -28,7 +28,7 @@ func Register(c *gin.Context) {
 		return
 	}
 	resCode := service.Register(params)
-	response.SendResponse(c, resCode)
+	response.SendResponse(c, resCode, gin.H{})
 }
 
 // Login 登录入口
@@ -39,7 +39,7 @@ func Login(c *gin.Context)  {
 		// 判断错误是不是 validator.ValidationErrors 类型
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			response.SendResponse(c, response.InvalidParam)
+			response.SendResponse(c, response.InvalidParam, gin.H{})
 			return
 		}
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -48,6 +48,16 @@ func Login(c *gin.Context)  {
 		return
 	}
 
-	resCode := service.Login(params)
-	response.SendResponse(c, resCode)
+	loginResponse, resCode := service.Login(params)
+	if resCode == response.OK {
+		response.SendResponse(c, resCode, gin.H{
+			"accessToken":  loginResponse.AccessToken,
+			"refreshToken": loginResponse.RefreshToken,
+			"userID":       loginResponse.UserId,
+			"username":     loginResponse.Username,
+		})
+	} else {
+		response.SendResponse(c, resCode, gin.H{})
+	}
+	
 }

@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"gin_forum/controllers"
+	"gin_forum/router/middleware"
 	"gin_forum/config/logger"
 )
 
@@ -13,6 +14,8 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	g.Use(logger.GinLogger(), logger.GinRecovery(true))
 
 	// 添加中间件
+	g.Use(middleware.NoCache)
+	g.Use(middleware.Options)
 	g.Use(mw...)
 
 	// 404 处理

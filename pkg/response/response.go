@@ -21,18 +21,18 @@ type ResponseData struct {
 	Data interface{} `json:"data"`
 }
 
-func SendResponse(c *gin.Context, code ResCode) {
+func SendResponse(c *gin.Context, code ResCode, data interface{}) {
 	c.JSON(http.StatusOK, &ResponseData{
 		Code: code,
 		Msg:  code.Msg(),
-		Data: nil,
+		Data: data,
 	})
 }
 
-func SendResponseWithMsg(c *gin.Context, code ResCode, msg string) {
+func SendResponseWithMsg(c *gin.Context, code ResCode, msg string, data interface{}) {
 	c.JSON(http.StatusOK, &ResponseData{
 		Code: code,
 		Msg:  msg,
-		Data: nil,
+		Data: data,
 	})
 }
