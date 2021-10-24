@@ -11,6 +11,7 @@ const (
 	CreateUserField
 	InternalServerError
 	InvalidToken
+	UserNotLogin
 )
 
 var codeMsgMap = map[ResCode]string{
@@ -22,6 +23,7 @@ var codeMsgMap = map[ResCode]string{
 	CreateUserField:     "创建用户失败",
 	InternalServerError: "服务器错误",
 	InvalidToken:        "生成Token失败",
+	UserNotLogin:        "用户未登陆",
 }
 
 // Msg 返回错误描述

@@ -10,7 +10,7 @@ import (
 
 const (
 	ContextUserIDKey = "userID"
-	ContextUserNameKey = "username"
+	ContextUserNameKey = "userName"
 )
 
 func AuthMiddleware() gin.HandlerFunc {

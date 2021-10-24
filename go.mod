@@ -10,14 +10,11 @@ require (
 	github.com/go-playground/locales v0.13.0
 	github.com/go-playground/universal-translator v0.17.0
 	github.com/go-playground/validator/v10 v10.4.1
-	github.com/mattn/go-sqlite3 v1.14.9 // indirect
-	github.com/mitchellh/mapstructure v1.4.2 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/spf13/viper v1.9.0
 	go.uber.org/zap v1.17.0
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gorm.io/driver/mysql v1.1.2
-	gorm.io/driver/sqlite v1.1.6 // indirect
 	gorm.io/gorm v1.21.16
 )
