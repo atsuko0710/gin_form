@@ -1,6 +1,9 @@
 package models
 
-import "gin_forum/config/mysql"
+import (
+	"gin_forum/config/mysql"
+	"gin_forum/params"
+)
 
 // import "gin_forum/config/mysql"
 
@@ -19,4 +22,9 @@ func (p *Post) TableName() string {
 
 func CreatePost(p Post) error {
 	return mysql.Db.Create(&p).Error
+}
+
+func FindPost(Id int64) (p *params.PostDetailResponse, err error) {
+	mysql.Db.Model(&Post{}).First(&p, Id)
+	return
 }

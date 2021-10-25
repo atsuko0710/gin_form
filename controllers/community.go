@@ -57,10 +57,21 @@ func CreatePost(c *gin.Context) {
 	response.SendResponse(c, resCode, gin.H{})
 }
 
-func PostDetail(c *gin.Context)  {
+// PostDetail 获取帖子详情
+func PostDetail(c *gin.Context) {
 	idStr := c.Param("id")
 	PostId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
 		response.SendResponse(c, response.InvalidParam, gin.H{})
 	}
+	postDetail, resCode := service.GetPostDetail(PostId)
+	response.SendResponse(c, resCode, gin.H{
+		"id":          postDetail.Id,
+		"title":       postDetail.Title,
+		"content":     postDetail.Content,
+		"author_id":   postDetail.AuthorId,
+		"status":      postDetail.Status,
+		"category_id": postDetail.CategoryId,
+		"create_time": postDetail.CreateTime.Format("2006-01-02 15:04:05"),
+	})
 }

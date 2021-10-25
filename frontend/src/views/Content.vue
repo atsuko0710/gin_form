@@ -47,7 +47,7 @@
         <h5 class="t-header"></h5>
         <div class="t-info">
           <a class="avatar"></a>
-          <span class="topic-name">b/{{post.community_name}}</span>
+          <span class="topic-name">b/{{post.name}}</span>
         </div>
         <p class="t-desc">树洞 树洞 无限树洞的树洞</p>
         <ul class="t-num">

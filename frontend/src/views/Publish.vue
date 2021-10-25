@@ -4,14 +4,14 @@
     <div class="left">
       <div class="post-name">我好想写点什么</div>
       <div class="post-type">
-        <input type="text" class="post-type-value" placeholder="选择一个频道" v-model="selectCommunity.name" @click="showCommunity()"/>
-        <ul class="post-type-options" v-show="showCommunityList">
+        <input type="text" class="post-type-value" placeholder="选择一个频道" v-model="selectCategory.name" @click="showCategory()"/>
+        <ul class="post-type-options" v-show="showCategoryList">
           <li class="post-type-cell"
-            v-for="(community, index) in communityList"
-            :key="community.id"
+            v-for="(category, index) in categoryList"
+            :key="category.id"
             @click="selected(index)"
           >
-            {{community.name}}
+            {{category.name}}
           </li>
         </ul>
         <i class="p-icon"></i>
@@ -72,9 +72,9 @@ export default {
     return {
       title: "",
       content: "",
-      showCommunityList: false,
-      selectCommunity: {},
-      communityList: []
+      showCategoryList: false,
+      selectCategory: {},
+      categoryList: []
     };
   },
   methods: {
@@ -85,7 +85,7 @@ export default {
         data: JSON.stringify({
           title: this.title,
           content: this.content,
-          community_id: this.selectCommunity.id
+          category_id: this.selectCategory.id
         })
       })
         .then(response => {
@@ -100,15 +100,15 @@ export default {
           console.log(error);
         });
     },
-    getCommunityList() {
+    getCategoryList() {
       this.$axios({
         method: "get",
-        url: "/community"
+        url: "/category"
       })
         .then(response => {
           console.log(response.data);
           if (response.code == 1000) {
-            this.communityList = response.data;
+            this.categoryList = response.data;
           } else {
             console.log(response.msg);
           }
@@ -117,17 +117,17 @@ export default {
           console.log(error);
         });
     },
-    showCommunity(){
-      this.showCommunityList = !this.showCommunityList;
+    showCategory(){
+      this.showCategoryList = !this.showCategoryList;
     },
     selected(index) {
-      this.selectCommunity = this.communityList[index];
-      this.showCommunityList = false;
-      console.log(this.selectCommunity)
+      this.selectCategory = this.categoryList[index];
+      this.showCategoryList = false;
+      console.log(this.selectCategory)
     }
   },
   mounted: function() {
-    this.getCommunityList();
+    this.getCategoryList();
   }
 };
 </script>
