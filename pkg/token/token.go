@@ -18,7 +18,7 @@ type Claims struct {
 const TokenExpireDuration = time.Hour * 24 * 365 // 过期时间
 
 func keyFunc(_ *jwt.Token) (i interface{}, err error) {
-	return viper.GetString("jwt_secret"), nil
+	return []byte(viper.GetString("jwt_secret")), nil
 }
 
 // GenToken 生成access token 和 refresh token

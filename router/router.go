@@ -29,8 +29,16 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 			"message": "Hello world!",
 		})
 	})
-	g.POST("/api/v1/register", controllers.Register)
-	g.POST("/api/v1/login", controllers.Login)
-	
+
+	v1 := g.Group("/api/v1")
+	v1.POST("/register", controllers.Register)
+	v1.POST("/login", controllers.Login)
+
+	v1.Use(middleware.AuthMiddleware())  // 增加token校验中间件
+	{
+		v1.GET("/category", controllers.CategoryList)
+		v1.GET("/category/:id", controllers.CategoryDetail)
+	}
+
 	return g
 }

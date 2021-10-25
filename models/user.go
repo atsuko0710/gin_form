@@ -2,7 +2,6 @@ package models
 
 import "gin_forum/config/mysql"
 
-
 type User struct {
 	BaseModel
 	UserId   int64  `json:"user_id" gorm:"column:user_id;not null"`

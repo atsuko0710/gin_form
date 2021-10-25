@@ -8,10 +8,12 @@ const (
 	UserExist
 	UserNotExist
 	InvalidPassword
-	CreateUserField
+	CreateUserFail
 	InternalServerError
 	InvalidToken
 	UserNotLogin
+	GetListFail
+	GetDetailFail
 )
 
 var codeMsgMap = map[ResCode]string{
@@ -20,10 +22,12 @@ var codeMsgMap = map[ResCode]string{
 	UserExist:           "用户已存在",
 	UserNotExist:        "用户名不存在",
 	InvalidPassword:     "用户名或密码错误",
-	CreateUserField:     "创建用户失败",
+	CreateUserFail:      "创建用户失败",
 	InternalServerError: "服务器错误",
 	InvalidToken:        "生成Token失败",
 	UserNotLogin:        "用户未登陆",
+	GetListFail:         "获取列表信息失败",
+	GetDetailFail:       "获取详情信息失败",
 }
 
 // Msg 返回错误描述

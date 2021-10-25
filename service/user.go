@@ -32,7 +32,7 @@ func Register(request params.CreateRequest) (code response.ResCode) {
 	}
 
 	if err := repository.CreateUser(user); err != nil {
-		return response.CreateUserField
+		return response.CreateUserFail
 	}
 
 	return response.OK
