@@ -3,10 +3,10 @@ package router
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
+	"gin_forum/config/logger"
 	"gin_forum/controllers"
 	"gin_forum/router/middleware"
-	"gin_forum/config/logger"
+	"github.com/gin-gonic/gin"
 )
 
 func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
@@ -34,12 +34,13 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	v1.POST("/register", controllers.Register)
 	v1.POST("/login", controllers.Login)
 
-	v1.Use(middleware.AuthMiddleware())  // 增加token校验中间件
+	v1.Use(middleware.AuthMiddleware()) // 增加token校验中间件
 	{
 		v1.GET("/category", controllers.CategoryList)
 		v1.GET("/category/:id", controllers.CategoryDetail)
 
 		v1.POST("/post", controllers.CreatePost)
+		v1.GET("/post/:id", controllers.PostDetail)
 	}
 
 	return g

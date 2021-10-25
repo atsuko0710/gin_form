@@ -15,7 +15,7 @@ func CreatePost(request params.CreatePostRequest) response.ResCode {
 	if err != nil {
 		return response.InvalidParam
 	}
-	
+
 	post := models.Post{
 		Title: request.Title,
 		Content: request.Content,
@@ -29,3 +29,4 @@ func CreatePost(request params.CreatePostRequest) response.ResCode {
 	}
 	return response.OK
 }
+

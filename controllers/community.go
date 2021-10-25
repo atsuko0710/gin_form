@@ -56,3 +56,11 @@ func CreatePost(c *gin.Context) {
 	resCode := service.CreatePost(params)
 	response.SendResponse(c, resCode, gin.H{})
 }
+
+func PostDetail(c *gin.Context)  {
+	idStr := c.Param("id")
+	PostId, err := strconv.ParseInt(idStr, 10, 64)
+	if err != nil {
+		response.SendResponse(c, response.InvalidParam, gin.H{})
+	}
+}

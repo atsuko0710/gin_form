@@ -7,3 +7,7 @@ type CreatePostRequest struct {
 	Status     string `json:"status" bindding:"required"`
 	CategoryId string `json:"category_id" bindding:"required"`
 }
+
+type PostDetailResponse struct {
+	
+}
