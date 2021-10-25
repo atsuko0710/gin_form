@@ -29,8 +29,8 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 			"message": "Hello world!",
 		})
 	})
-	g.POST("/register", controllers.Register)
-	g.POST("/login", controllers.Login)
+	g.POST("/api/v1/register", controllers.Register)
+	g.POST("/api/v1/login", controllers.Login)
 	
 	return g
 }

@@ -1,4 +1,4 @@
-# bluebell_frontend
+# frontend
 
 ## Project setup
 ```

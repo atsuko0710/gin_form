@@ -34,7 +34,7 @@ Vue.use(VueRouter)
     component: Login
   },
   {
-    path: '/signup',
+    path: '/register',
     name:"SignUp",
     component: SignUp
   }
