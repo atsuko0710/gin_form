@@ -14,6 +14,7 @@ const (
 	UserNotLogin
 	GetListFail
 	GetDetailFail
+	CreatePostFail
 )
 
 var codeMsgMap = map[ResCode]string{
@@ -28,6 +29,7 @@ var codeMsgMap = map[ResCode]string{
 	UserNotLogin:        "用户未登陆",
 	GetListFail:         "获取列表信息失败",
 	GetDetailFail:       "获取详情信息失败",
+	CreatePostFail:      "创建帖子失败",
 }
 
 // Msg 返回错误描述

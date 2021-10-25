@@ -38,6 +38,8 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	{
 		v1.GET("/category", controllers.CategoryList)
 		v1.GET("/category/:id", controllers.CategoryDetail)
+
+		v1.POST("/post", controllers.CreatePost)
 	}
 
 	return g

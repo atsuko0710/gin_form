@@ -13,7 +13,7 @@ import (
 )
 
 // Register 注册用户
-func Register(request params.CreateRequest) (code response.ResCode) {
+func Register(request params.CreateUserRequest) (code response.ResCode) {
 	if !repository.CheckUserExist(request.Username) {
 		return response.UserExist
 	}

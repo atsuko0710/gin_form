@@ -7,3 +7,7 @@ func TNUser() string {
 func TNCategory() string {
 	return "category"
 }
+
+func TNPost() string {
+	return "post"
+}

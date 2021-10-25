@@ -1,7 +1,8 @@
 package service
 
 import (
-	"gin_forum/models"
+	"database/sql"
+	"gin_forum/params"
 	"gin_forum/pkg/response"
 	"gin_forum/repository"
 
@@ -9,21 +10,27 @@ import (
 )
 
 // GetCategoryList 获取分类列表
-func GetCategoryList() (c []*models.CategoryListApi, resCode response.ResCode) {
+func GetCategoryList() (c []*params.CategoryListResponse, resCode response.ResCode) {
 	c, err := repository.GetCategoryList()
 	if err != nil {
 		zap.L().Error("repository.GetCategoryList() failed", zap.Error(err))
-		return []*models.CategoryListApi{}, response.GetListFail
+		return []*params.CategoryListResponse{}, response.GetListFail
 	}
 	return c, response.OK
 }
 
 // GetCategoryDetail 获取分类详情
-func GetCategoryDetail(Id int64) (c *models.CategoryDetailApi, resCode response.ResCode)  {
+func GetCategoryDetail(Id int64) (c *params.CategoryDetailResponse, resCode response.ResCode)  {
 	c, err := repository.GetCategoryDetail(Id)
+
+	// 没有找到结果
+	if err == sql.ErrNoRows {
+		return &params.CategoryDetailResponse{}, response.GetDetailFail
+	}
+	
 	if err != nil {
 		zap.L().Error("repository.GetCategoryDetail() failed", zap.Error(err))
-		return &models.CategoryDetailApi{}, response.GetDetailFail
+		return &params.CategoryDetailResponse{}, response.GetDetailFail
 	}
 	return c, response.OK
 }

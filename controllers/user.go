@@ -14,7 +14,7 @@ import (
 // Register 处理用户注册入口
 func Register(c *gin.Context) {
 	// 获取参数
-	var params params.CreateRequest
+	var params params.CreateUserRequest
 	if err := c.ShouldBindJSON(&params); err != nil {
 		// 判断错误是不是 validator.ValidationErrors 类型
 		errs, ok := err.(validator.ValidationErrors)
