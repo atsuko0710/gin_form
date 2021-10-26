@@ -75,3 +75,26 @@ func PostDetail(c *gin.Context) {
 		"create_time": postDetail.CreateTime.Format("2006-01-02 15:04:05"),
 	})
 }
+
+func PostList(c *gin.Context) {
+	// 获取分页参数
+	pageIndex := c.Query("index")
+	pageCount := c.Query("count")
+
+	var (
+		index int64
+		count int64
+		err   error
+	)
+
+	index, err = strconv.ParseInt(pageIndex, 10, 64) 
+	if err != nil {
+		index = 1
+	}
+	count, err = strconv.ParseInt(pageCount, 10, 64) 
+	if err != nil {
+		count = 1
+	}
+	posts := service.GetPostList(index, count)
+	response.SendResponse(c, response.OK, posts)
+}

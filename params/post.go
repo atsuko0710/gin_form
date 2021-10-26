@@ -19,3 +19,9 @@ type PostDetailResponse struct {
 	CategoryId string    `json:"category_id"`
 	CreateTime time.Time `json:"create_time"`
 }
+
+type ApiPostDetailResponse struct {
+	AuthorName string `json:"author_name"`
+	*PostDetailResponse
+	CategoryName string `json:"category_name"`
+}

@@ -41,6 +41,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 
 		v1.POST("/post", controllers.CreatePost)
 		v1.GET("/post/:id", controllers.PostDetail)
+		v1.GET("/posts", controllers.PostList)
 	}
 
 	return g

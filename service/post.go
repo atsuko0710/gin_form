@@ -47,3 +47,8 @@ func GetPostDetail(Id int64) (c *params.PostDetailResponse, resCode response.Res
 	}
 	return c, response.OK
 }
+
+func GetPostList(index int64, count int64) (posts []params.ApiPostDetailResponse) {
+	posts = repository.GetPostList(index, count)
+	return
+}
