@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gin_forum/config"
 	"gin_forum/config/mysql"
+	"gin_forum/config/redis"
 	"gin_forum/config/logger"
 	"gin_forum/controllers"
 	"gin_forum/pkg/snowflake"
@@ -44,6 +45,13 @@ func main() {
 		fmt.Printf("init validator failed, err:%v", err)
 		return
 	}
+
+	// 初始化redis
+	if err := redis.Init(); err != nil {
+		fmt.Printf("init redis failed, err:%v", err)
+		return
+	}
+	defer redis.Clone()
 
 	gin.SetMode(viper.GetString("runmode"))
 	g := gin.New()
