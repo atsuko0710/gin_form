@@ -5,7 +5,7 @@ import (
 	"gin_forum/params"
 )
 
-func CreatePost(p models.Post) error {
+func CreatePost(p models.Post) (post models.Post, err error) {
 	return models.CreatePost(p)
 }
 

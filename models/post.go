@@ -19,8 +19,9 @@ func (p *Post) TableName() string {
 	return TNPost()
 }
 
-func CreatePost(p Post) error {
-	return mysql.Db.Create(&p).Error
+func CreatePost(p Post) (post Post, err error) {
+	res := mysql.Db.Create(&p)
+	return p, res.Error
 }
 
 func FindPost(Id int64) (p *params.PostDetailResponse, err error) {

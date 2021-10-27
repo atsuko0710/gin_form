@@ -2,11 +2,15 @@ package service
 
 import (
 	"database/sql"
+	"fmt"
 	"gin_forum/models"
 	"gin_forum/params"
+	"gin_forum/pkg/enum"
 	"gin_forum/pkg/response"
+	"gin_forum/pkg/util"
 	"gin_forum/repository"
 	"strconv"
+	"time"
 
 	"go.uber.org/zap"
 )
@@ -27,10 +31,28 @@ func CreatePost(request params.CreatePostRequest) response.ResCode {
 		Status:     POST_NORMAL_STATUS,
 	}
 
-	if err := repository.CreatePost(post); err != nil {
+	if res, err := repository.CreatePost(post); err != nil {
 		return response.CreatePostFail
 	}
+
 	return response.OK
+}
+
+func createPostRedis(post models.Post) {
+	now := float64(time.Now().Unix())
+	voteKey := enum.KeyPostVotedPrefix + fmt.Sprint(post.Id)
+
+	postInfo := map[string]interface{}{
+		"title":    post.Title,
+		"summary":  util.TruncateByWords(post.Content, 120),
+		"post:id":  post.Id,
+		"user:id":  post.AuthorId,
+		"time":     now,
+		"votes":    1,
+		"comments": 0,
+	}
+
+	// 事务操作
 }
 
 func GetPostDetail(Id int64) (c *params.PostDetailResponse, resCode response.ResCode) {
