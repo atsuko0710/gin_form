@@ -15,6 +15,7 @@ require (
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/onsi/gomega v1.16.0 // indirect
+	github.com/spf13/cast v1.4.1
 	github.com/spf13/viper v1.9.0
 	go.uber.org/zap v1.17.0
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5

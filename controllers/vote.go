@@ -3,7 +3,7 @@ package controllers
 import (
 	"gin_forum/params"
 	"gin_forum/pkg/response"
-	"gin_forum/service"
+	// "gin_forum/service"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -14,7 +14,7 @@ import (
 // PostVote 投票
 func PostVote(c *gin.Context) {
 	var params params.VoteRequest
-	userId, _, _ := getCurrentUser(*c)
+	// userId, _, _ := getCurrentUser(*c)
 	if err := c.ShouldBindJSON(&params); err != nil {
 		// 判断错误是不是 validator.ValidationErrors 类型
 		errs, ok := err.(validator.ValidationErrors)
@@ -28,5 +28,5 @@ func PostVote(c *gin.Context) {
 		})
 		return
 	}
-	service.VoteForPost()
+	// service.VoteForPost()
 }
