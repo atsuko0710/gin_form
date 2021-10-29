@@ -9,7 +9,6 @@ import (
 	"time"
 
 	redisDriver "github.com/go-redis/redis"
-	"github.com/spf13/cast"
 )
 
 const (
@@ -55,10 +54,13 @@ func VoteForPost(userId string, v params.VoteRequest) (resCode response.ResCode)
 
 	pipeline.ZIncrBy(enum.KeyPostScore, VoteScore*diffAbs*v.Vote, v.PostId) // 更新分数
 
-	switch math.Abs(ov) - math.Abs(v.Vote) {
-	case 1:
-		pipeline.HIncrBy(K)
+	// switch math.Abs(ov) - math.Abs(v.Vote) {
+	// case 1:
+	// 	pipeline.HIncrBy()
+	// }
+	_, err := pipeline.Exec()
+	if err != nil {
+		return response.VotedFail
 	}
-
 	return response.OK
 }

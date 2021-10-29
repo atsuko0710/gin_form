@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -14,15 +15,16 @@ var (
 
 // Init 初始化mysql数据库
 func Init() (err error) {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=%t&loc=%s",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=%t&loc=%s",
 		viper.GetString("db.user"),
 		viper.GetString("db.password"),
 		viper.GetString("db.host"),
+		viper.GetString("db.port"),
 		viper.GetString("db.name"),
 		true,
 		//"Asia/Shanghai"),
 		"Local")
-
+	zap.L().Info(dsn)
 	Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(fmt.Errorf("database connection failed, err:%v", err))

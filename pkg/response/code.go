@@ -16,6 +16,7 @@ const (
 	GetDetailFail
 	CreatePostFail
 	VoteTimeExpire
+	VotedFail
 )
 
 var codeMsgMap = map[ResCode]string{
@@ -32,6 +33,7 @@ var codeMsgMap = map[ResCode]string{
 	GetDetailFail:       "获取详情信息失败",
 	CreatePostFail:      "创建帖子失败",
 	VoteTimeExpire:      "投票时间已超时",
+	VotedFail:           "投票失败",
 }
 
 // Msg 返回错误描述
