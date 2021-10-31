@@ -8,6 +8,7 @@ import (
 	"gin_forum/params"
 	"gin_forum/pkg/enum"
 	"gin_forum/pkg/response"
+	"gin_forum/pkg/util"
 	"gin_forum/repository"
 	redisDriver "github.com/go-redis/redis"
 	"strconv"
@@ -57,15 +58,15 @@ func createPostRedis(post models.Post) (err error) {
 	now := float64(time.Now().Unix())
 	voteKey := enum.KeyPostVotedPrefix + fmt.Sprint(post.Id)
 
-	// postInfo := map[string]interface{}{
-	// 	"title":    post.Title,
-	// 	"summary":  util.TruncateByWords(post.Content, 120),
-	// 	"post:id":  post.Id,
-	// 	"user:id":  post.AuthorId,
-	// 	"time":     now,
-	// 	"votes":    1,
-	// 	"comments": 0,
-	// }
+	postInfo := map[string]interface{}{
+		"title":    post.Title,
+		"summary":  util.TruncateByWords(post.Content, 120),
+		"post:id":  post.Id,
+		"user:id":  post.AuthorId,
+		"time":     now,
+		"votes":    1,
+		"comments": 0,
+	}
 
 	// 事务操作
 	pipeline := redis.Client.TxPipeline()
@@ -79,10 +80,12 @@ func createPostRedis(post models.Post) (err error) {
 		Member: post.Id,
 	})
 
-	pipeline.ZAdd(enum.KeyPostTime, redisDriver.Z{  // 添加时间
+	pipeline.ZAdd(enum.KeyPostTime, redisDriver.Z{ // 添加时间
 		Score:  now,
 		Member: post.Id,
 	})
+
+	pipeline.HMSet(enum.KeyPostInfo+fmt.Sprint(post.Id), postInfo)
 	_, err = pipeline.Exec()
 	return
 }

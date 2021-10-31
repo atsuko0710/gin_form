@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 	"gin_forum/config"
+	"gin_forum/config/elasticsearch"
+	"gin_forum/config/logger"
 	"gin_forum/config/mysql"
 	"gin_forum/config/redis"
-	"gin_forum/config/logger"
 	"gin_forum/controllers"
 	"gin_forum/pkg/snowflake"
 	"gin_forum/router"
@@ -52,6 +53,11 @@ func main() {
 		return
 	}
 	defer redis.Clone()
+	
+	if err := elasticsearch.Init(); err != nil {
+		fmt.Printf("init elasticsearch failed, err:%v", err)
+		return
+	}
 
 	gin.SetMode(viper.GetString("runmode"))
 	g := gin.New()
