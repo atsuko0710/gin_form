@@ -25,3 +25,11 @@ type ApiPostDetailResponse struct {
 	*PostDetailResponse
 	CategoryName string `json:"category_name"`
 }
+
+type PostSearchResponse struct {
+	PostId     string `json:"post_id"`
+	Title      string `json:"title"`
+	Content    string `json:"content"`
+	AuthorId   int64  `json:"author_id"`
+	CategoryId string `json:"category_id"`
+}

@@ -87,6 +87,8 @@ func createPostRedis(post models.Post) (err error) {
 
 	pipeline.HMSet(enum.KeyPostInfo+fmt.Sprint(post.Id), postInfo)
 	_, err = pipeline.Exec()
+
+	indexPageToEs(post)
 	return
 }
 
@@ -108,4 +110,22 @@ func GetPostDetail(Id int64) (c *params.PostDetailResponse, resCode response.Res
 func GetPostList(index int64, count int64) (posts []params.ApiPostDetailResponse) {
 	posts = repository.GetPostList(index, count)
 	return
+}
+
+func indexPageToEs(post models.Post) {
+	postSearch := params.PostSearchResponse {
+		PostId: fmt.Sprint(post.Id),
+		Title: post.Title,
+		Content: post.Content,
+		AuthorId: post.AuthorId,
+		CategoryId: fmt.Sprint(post.CategoryId),
+	}
+
+	repository.CreatePostInES(postSearch)
+}
+
+// searchPost 查询帖子
+func SearchPost(param string) []params.PostSearchResponse {
+	res := repository.SearchPostInES(param)
+	return res
 }

@@ -4,7 +4,9 @@ package util
 // s 帖子内容
 // maxWords 转换后的字符长度
 func TruncateByWords(s string, maxWords int) string {
-	str := string([]rune(s)[:maxWords])
-	res := str + "..."
-	return res
+	if len(s) > maxWords {
+		str := string([]rune(s)[:maxWords])
+		s = str + "..."	
+	}
+	return s
 }

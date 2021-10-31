@@ -87,14 +87,20 @@ func PostList(c *gin.Context) {
 		err   error
 	)
 
-	index, err = strconv.ParseInt(pageIndex, 10, 64) 
+	index, err = strconv.ParseInt(pageIndex, 10, 64)
 	if err != nil {
 		index = 1
 	}
-	count, err = strconv.ParseInt(pageCount, 10, 64) 
+	count, err = strconv.ParseInt(pageCount, 10, 64)
 	if err != nil {
 		count = 1
 	}
 	posts := service.GetPostList(index, count)
+	response.SendResponse(c, response.OK, posts)
+}
+
+func PostSearch(c *gin.Context) {
+	paramsStr := c.Query("param")
+	posts := service.SearchPost(paramsStr)
 	response.SendResponse(c, response.OK, posts)
 }

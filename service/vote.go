@@ -54,10 +54,25 @@ func VoteForPost(userId string, v params.VoteRequest) (resCode response.ResCode)
 
 	pipeline.ZIncrBy(enum.KeyPostScore, VoteScore*diffAbs*v.Vote, v.PostId) // 更新分数
 
-	// switch math.Abs(ov) - math.Abs(v.Vote) {
-	// case 1:
-	// 	pipeline.HIncrBy()
-	// }
+	// 统计帖子详情中的投票数
+	switch math.Abs(ov) - math.Abs(v.Vote) {
+	case 1:
+		// 当前投票记录和现在投票数据的绝对值为1时
+		// ov = 1 / -1
+		// v = 0
+		// 投票数-1
+		pipeline.HIncrBy(enum.KeyPostInfo+v.PostId, "votes", -1)
+	case 0:
+		// ov = -1 / 1
+		// v = -1 / 1
+		// 投票数不变
+	case -1:
+		// ov = 0 
+		// v = 1 / -1
+		pipeline.HIncrBy(enum.KeyPostInfo+v.PostId, "votes", 1)
+	default:
+		return response.VotedFail
+	}
 	_, err := pipeline.Exec()
 	if err != nil {
 		return response.VotedFail
